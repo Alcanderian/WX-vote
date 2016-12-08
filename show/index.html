@@ -1,72 +1,142 @@
 <!doctype html>
 <html>
-    <head>
-        <title>微信投票结果</title>
-        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-<<<<<<< HEAD
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
-        <script type="text/javascript" src="assets/js/jquery.js"></script>
-        <script type="text/javascript" src="assets/js/refresh.js"></script>
-=======
-        <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
-        <script type="text/javascript" src="/assets/js/jquery.js"></script>
-        <script type="text/javascript" src="/assets/js/refresh.js"></script>
->>>>>>> cb22f85559e1eebedf0208b5af4c287cdc4d7eff
-        <style>
-            body {
-                background: rgb(37,21,2);
-                width: 1024px;}
-            .id {
-                color: #D7B13B;
-            }
-            #content {
-                margin-top: 120px;
-            }
-            #topbar {
-                width: 1024px;
-                height: 600px;
-<<<<<<< HEAD
-                background-image: url(assets/img/decorate.png);
-=======
-                background-image: url(/assets/img/decorate.png);
->>>>>>> cb22f85559e1eebedf0208b5af4c287cdc4d7eff
-                background-repeat: no-repeat;
-                position: absolute;
-                top: 0;
-                z-index: 0;
-            }
-            #bottombar {
-                width: 100%;
-                height: 100%;
-<<<<<<< HEAD
-                background-image: url(assets/img/background.png);
-=======
-                background-image: url(/assets/img/background.png);
->>>>>>> cb22f85559e1eebedf0208b5af4c287cdc4d7eff
-                background-repeat: repeat;
-                position: absolute;
-                bottom: 0;
-                z-index: -1;
-            }
-            #Maxcell {
-                width: 1024px;
-                height: 100px;
-                margin-top: 720px;
-                position: absolute;
-<<<<<<< HEAD
-                background-image: url(assets/img/bottombar.png);
-=======
-                background-image: url(/assets/img/bottombar.png);
->>>>>>> cb22f85559e1eebedf0208b5af4c287cdc4d7eff
-                background-repeat: no-repeat;
-                z-index: -2;
-            }
-        </style>
-    </head>
-    <body>
-        <div id="topbar"></div>
-        <div id="content"></div>
-        <div id="bottombar"><div id="Maxcell"></div></div>
-    </body>
+<head>
+    <title>微信投票结果</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//o5ngisf7c.qnssl.com/source/fontawesome/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="//o5ngisf7c.qnssl.com/source/bootstrap/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato">
+    <style>
+        nav, footer {
+            font: 400 15px/1.8 Lato, sans-serif;
+        }
+
+        .navbar {
+            margin-bottom: 0;
+            background-color: #2d2d30;
+            border: 0;
+            letter-spacing: 2px;
+            opacity: 0.9;
+        }
+
+        .navbar .navbar-brand, .navbar .navbar-brand:hover {
+            background-color: #eee;
+            color: #2d2d30 !important;
+        }
+
+        .navbar .navbar-brand::selection {
+            background-color: #eee;
+            color: #2d2d30 !important;
+        }
+
+        .navbar-nav li.active a {
+            color: #fff !important;
+            background-color: #efa43d !important;
+        }
+
+        .navbar-nav li a:hover {
+            color: #fff !important;
+        }
+
+        .navbar-nav li a {
+            color: #ccc !important;
+        }
+
+        .navbar-brand img {
+            height: 30px;
+            float: left;
+            margin-top: -3px;
+        }
+
+        .navbar-default .navbar-toggle {
+            border-color: transparent;
+        }
+
+        .label {
+            color: black;
+        }
+
+        .container-inner {
+            padding: 10px 50px;
+        }
+
+        .container-fluid {
+            padding: 0 0;
+        }
+
+        .dummy-hr {
+            height: 10px;
+        }
+
+        footer {
+            background-color: #2d2d30;
+            color: #f5f5f5;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            position: fixed;
+        }
+
+        footer a {
+            color: #f5f5f5;
+        }
+
+        .progress {
+            margin-bottom: 13px;
+            height: 15px;
+        }
+
+        .dummy-hr-50 {
+            height: 50px;
+        }
+
+        .dummy-hr-5 {
+            height: 5px;
+        }
+
+    </style>
+</head>
+<body id="top" style="background-color: cornflowerblue;">
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="http://maxcell.com.cn">
+                <img src="assets/img/maxcell-white-no-content.svg">&nbsp;<big>Maxcell</big>&nbsp;
+            </a>
+        </div>
+    </div>
+</nav>
+
+<div class="dummy-hr-50"></div>
+<div class="dummy-hr-50"></div>
+<div class="dummy-hr"></div>
+<div class="dummy-hr"></div>
+<div class="dummy-hr"></div>
+<div class="dummy-hr"></div>
+
+<div id="content" class="container">
+    <div class="row" id="list-container" style="display: none;">
+        <div class="vote-group col-sm-8 col-sm-offset-2" style="background-color: white;" id="list">
+            <div class="dummy-hr"></div>
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+</div>
+
+<footer class="container-fluid text-center">
+    <div class="container container-inner">
+        <a class="up-arrow" href="#top" data-toggle="tooltip" title="TO TOP">
+            <span class="glyphicon glyphicon-chevron-up"></span>
+        </a>
+        <div class="container-fluid dummy-hr-5"></div>
+        <p>Copyright &copy;2016 Maxcell. All rights reserved.</p>
+    </div>
+</footer>
+
+<script type="text/javascript" src="//o5ngisf7c.qnssl.com/source/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="//o5ngisf7c.qnssl.com/source/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="assets/js/refresh.js"></script>
+
+</body>
 </html>

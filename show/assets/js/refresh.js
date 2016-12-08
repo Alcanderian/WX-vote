@@ -1,33 +1,73 @@
-$(document).ready(function(){
-	refresh(true);
-	setTimeout("atTime()",5000);
-})
+var first;
+var refresh_id;
 
-function atTime(){
-	refresh(false);
-	setTimeout("atTime()",5000);
-}
+var refresh = function () {
+    $.ajax({
+        type: "post",
+        data: {
+            first: first
+        },
+        url: "./load_vote.php",
+        success: function (msg) {
 
-function refresh(first){
-	$.post("./getData.php",function(msg){
-		var data=eval("("+msg+")");
-		if(first)
-			$("#content").empty();
-		for(var i=0;i<data.num;i++){
-			if(first)
-				$("#content").append(
-					$("<div id=\""+data.data[i].id+"\" />").append(
-						$("<div class=\"col-xs-12 col-sm-12 col-md-6 col-md-offset-3 id\" />"),
-						$("<div class=\"col-xs-12 col-sm-12 col-md-6 col-md-offset-3\" />").append(
-							$("<div class=\"progress\" />").append(
-								$("<div class=\"progress-bar progress-bar-warning vote\" role=\"progressbar\" style=\"min-width:1.5%\" />")
-								)
-							)
-						)
-					);
-			$("#"+data.data[i].id+" .id").html(data.data[i].id+" "+data.data[i].team);
-			$("#"+data.data[i].id+" .vote").width(data.data[i].vote*1.5+"%");
-			$("#"+data.data[i].id+" .vote").html(data.data[i].vote);
-		}
-	});
-}
+            var data = JSON.parse(msg);
+            console.log(data);
+
+            if (data["status"] == true) {
+
+                for (var i = 0; i < data["msg"].length; ++i) {
+                    if (first == true) {
+                        $("#team" + data["msg"][i]["tid"])
+                            .html(data["msg"][i]["name"] + " - &lt;" + data["msg"][i]["work"] + "&gt;");
+                    }
+
+                    $("#vote" + data["msg"][i]["tid"])
+                        .html(data["msg"][i]["voted"]);
+
+                    $("#group" + data["msg"][i]["tid"])
+                        .attr("style", "width: " + data["msg"][i]["percent"] + "%");
+                }
+
+                first = false;
+
+            } else if (data["status"] == false) {
+
+                alert(data["msg"]);
+                clearInterval(refresh_id);
+
+            }
+        },
+        error: function () {
+
+            alert("Cannot connect server");
+            clearInterval(refresh_id);
+        }
+    });
+};
+
+
+$(document).ready(function () {
+    $("#list-container").attr("style", "display: block;");
+    for (var i = 1; i <= 10; ++i) {
+        $("#list").append(
+            "<div>" +
+                "<div class='row'>" +
+                    "<div class='col-sm-8'>" +
+                        "<div class='label form-control' id='team" + i + "'></div>" +
+                    "</div>" +
+                    "<div class='col-sm-4 text-right'>" +
+                        "<div class='label' id='vote" + i + "'>&nbsp;</div>" +
+                    "</div>" +
+                "</div>" +
+                "<div class='progress'>" +
+                    "<div class='progress-bar progress-bar-warning progress-bar-striped active'" +
+                        " id='group" + i + "'" +
+                        "aria-valuemin='0' aria-valuemax='100' style='width: 50%'>" +
+                    "</div>" +
+                "</div>" +
+            "</div>"
+        )
+    }
+    first = true;
+    refresh_id = setInterval(refresh, 1000);
+});

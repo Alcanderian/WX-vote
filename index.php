@@ -3,6 +3,8 @@ header("Content-type:text/html;charset=utf-8");
 
 define('VOTE_LIMIT', 3);
 
+define('ON_VOTE', true);
+
 function checkSignature() {
     $signature = $_GET["signature"];
     $timestamp = $_GET["timestamp"];
@@ -64,12 +66,16 @@ function createResponse() {
         $query = explode(" ", $query, 2);
 
         if ($query && $query[0] == "投票") {
+            if(!ON_VOTE) {
+                $response->addChild("Content", toUtf("已停止投票，谢谢参与！"));
+                return $response->asXML();
+            }
             //show list
             if ((count($query) == 1 || !isset($query[1])) && $query[0] == "投票") {
                 $result = $db_mysqli->query("select * from Vote");
-                $content = toUtf("参赛队伍及作品：") . "\n";
+                $content = toUtf("输入投票和队伍编号可参与投票，如“投票 1 2 3”。（请注意空格）\n\n参赛队伍及作品：") . "\n";
                 while ($row = $result->fetch_object()) {
-                    $content .= $row->tid . "." . toUtf($row->name) . "<" . toUtf($row->work) . ">\n";
+                    $content .= $row->tid . "." . toUtf($row->name) . " - <" . toUtf($row->work) . ">\n";
                 }
                 $response->addChild("Content", $content);
                 return $response->asXML();
@@ -115,7 +121,7 @@ function createResponse() {
                             $result = $db_mysqli->query("select * from Vote");
                             $content .= toUtf("参赛队伍及作品：\n");
                             while ($row = $result->fetch_object()) {
-                                $content .= $row->tid . "." . toUtf($row->name) . "<" . toUtf($row->work) . ">\n";
+                                $content .= $row->tid . "." . toUtf($row->name) . " - <" . toUtf($row->work) . ">\n";
                             }
                             $response->addChild("Content", $content);
                             return $response->asXML();
@@ -168,14 +174,26 @@ function createResponse() {
                 . "\n\nhttp://danmu.maxcell.com.cn/");
             return $response->asXML();
 
-        } else {
+        } else if($xml->Content == "橙名夜"){
 
-            $content = toUtf("输入有误，请重试！\n\n输入投票和队伍编号可参与投票，如“投票 1 2 3”。\n\n"
+            $content = toUtf("欢迎来到橙名夜！\n\n输入投票和队伍编号可参与投票，如“投票 1 2 3”。\n\n"
                 . "输入“弹幕”可获取弹幕发送链接。\n\n输入“节目单”可查看橙名夜节目单。\n\n");
             $result = $db_mysqli->query("select * from Vote");
             $content .= toUtf("参赛队伍及作品：") . "\n";
             while ($row = $result->fetch_object()) {
-                $content .= $row->tid . "." . toUtf($row->name) . "<" . toUtf($row->work) . ">\n";
+                $content .= $row->tid . "." . toUtf($row->name) . " - <" . toUtf($row->work) . ">\n";
+            }
+            $response->addChild("Content", $content);
+            return $response->asXML();
+
+        } else {
+
+            $content = toUtf("输入格式有误！\n\n输入投票和队伍编号可参与投票，如“投票 1 2 3”。\n\n"
+                . "输入“弹幕”可获取弹幕发送链接。\n\n输入“节目单”可查看橙名夜节目单。\n\n");
+            $result = $db_mysqli->query("select * from Vote");
+            $content .= toUtf("参赛队伍及作品：") . "\n";
+            while ($row = $result->fetch_object()) {
+                $content .= $row->tid . "." . toUtf($row->name) . " - <" . toUtf($row->work) . ">\n";
             }
             $response->addChild("Content", $content);
             return $response->asXML();
